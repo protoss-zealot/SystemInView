@@ -1,18 +1,7 @@
 
 #include "inputDev.h"
 
-void remove_quotes(char * str)
-{
-    if (!str)
-                return;
-
-    while (*str == '"')
-                *(str++) = ' ';
-
-    strend(str,'"');
-}
-
-char *strend(char * str, char chr)
+static char *strend(char * str, char chr)
 {
     if (!str)
                 return NULL;
@@ -23,6 +12,18 @@ char *strend(char * str, char chr)
 
     return str;
 }
+
+static void remove_quotes(char * str)
+{
+    if (!str)
+                return;
+
+    while (*str == '"')
+                *(str++) = ' ';
+
+    strend(str,'"');
+}
+
 
 
 void getInputDev(struct inputDevInfo idevInfo[], int *totalNum)

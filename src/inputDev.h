@@ -22,8 +22,8 @@ struct inputDevInfo{
 };
 
 
-static void remove_quotes(char * str);
-static char *strend(char * str, char chr);
+//static void remove_quotes(char * str);
+//static char *strend(char * str, char chr);
 extern void getInputDev(struct inputDevInfo idevInfo[], int *totalNum);
 
 

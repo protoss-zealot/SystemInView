@@ -6,13 +6,15 @@
 
 using namespace std;
 
+
 ShellDialog::ShellDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ShellDialog)
 {
     ui->setupUi(this);
-
     ui->outinfo->clear();
+
+    ping_running = false;
 
     cmd = new QProcess;
 
@@ -42,20 +44,27 @@ void ShellDialog::on_Ping_clicked()
 {
     QString input = ui->lineEdit->text();
     input = "ping " + input;
+
     cmd->start(input);
+
+    ping_running = true;    /*set ping running flag*/
     output = tr("");
-    ui->outinfo->setText(output);
+    ui->outinfo->setText(output);   /*show all the messages*/
 }
 
 void ShellDialog::on_End_clicked()
 {
     Q_PID id = cmd->pid();
-    QString temp = QString::number(id,10);
 
+    QString temp = QString::number(id,10);
     QString endcmd = "kill -2 "+ temp;
 
     const char *pend = endcmd.toStdString().c_str();
-    //cout<<pend<<endl;
 
-    system(pend);
+    /* Send SIGINT signal to the process,end it. */
+    if(ping_running)
+    {
+        system(pend);
+        ping_running = false;   /* When ping finished, we could not send SIGINT.*/
+    }
 }

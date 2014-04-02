@@ -22,6 +22,8 @@ private:
 
     QProcess *cmd;
     QString output;       //用于保存输出结果
+    bool ping_running;
+
 private slots:
     void on_End_clicked();
     void on_Ping_clicked();
